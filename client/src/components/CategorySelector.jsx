@@ -2,9 +2,30 @@ import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const CATEGORIES = [
-  { value: 'couples', label: 'Couples' },
-  { value: 'friends', label: 'Friends' },
-  { value: 'family', label: 'Family' },
+  {
+    value: 'couples',
+    label: 'Couples',
+    emoji: '💑',
+    gradient: 'from-pink-500 to-rose-600',
+    shadow: 'shadow-pink-500/40',
+    ring: 'ring-pink-400',
+  },
+  {
+    value: 'friends',
+    label: 'Friends',
+    emoji: '👫',
+    gradient: 'from-blue-500 to-cyan-500',
+    shadow: 'shadow-blue-500/40',
+    ring: 'ring-blue-400',
+  },
+  {
+    value: 'family',
+    label: 'Family',
+    emoji: '👨\u200d👩\u200d👧',
+    gradient: 'from-amber-400 to-orange-500',
+    shadow: 'shadow-orange-500/40',
+    ring: 'ring-orange-400',
+  },
 ]
 
 export default function CategorySelector({ selected, onSelect }) {
@@ -19,19 +40,27 @@ export default function CategorySelector({ selected, onSelect }) {
   )
 
   return (
-    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-      {CATEGORIES.map(({ value, label }) => (
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 w-full max-w-2xl">
+      {CATEGORIES.map(({ value, label, emoji, gradient, shadow, ring }) => (
         <button
           key={value}
           onClick={() => handleSelect(value)}
-          className={`px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
+          className={`category-btn group relative flex flex-col items-center gap-3 px-6 py-8 sm:py-10 rounded-2xl font-display text-white font-bold text-lg shadow-xl ${shadow} bg-gradient-to-br ${gradient} focus:outline-none focus:ring-4 ${ring} focus:ring-offset-2 focus:ring-offset-party-deep-purple ${
             selected === value
-              ? 'bg-indigo-600 text-white shadow-lg scale-105'
-              : 'bg-white text-gray-700 border-2 border-gray-200 hover:border-indigo-400 hover:shadow-md'
+              ? 'ring-4 ' + ring + ' scale-105'
+              : ''
           }`}
           aria-pressed={selected === value}
         >
-          {label}
+          <span className="text-5xl sm:text-6xl drop-shadow-lg group-hover:scale-110 transition-transform duration-300">
+            {emoji}
+          </span>
+          <span className="text-xl tracking-wide">{label}</span>
+          {selected === value && (
+            <span className="absolute -top-2 -right-2 bg-white text-party-purple rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold shadow-lg">
+              ✓
+            </span>
+          )}
         </button>
       ))}
     </div>
