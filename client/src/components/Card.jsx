@@ -17,7 +17,7 @@ export default function Card({ id, text, isFlipped, onFlip }) {
 
   return (
     <div
-      className="perspective w-full h-48 sm:h-56 cursor-pointer"
+      className="perspective w-full h-56 sm:h-64 cursor-pointer card-hover"
       onClick={handleFlip}
       onKeyDown={handleKeyDown}
       tabIndex={0}
@@ -29,14 +29,17 @@ export default function Card({ id, text, isFlipped, onFlip }) {
       }
     >
       <div className={`flip-card-inner ${isFlipped ? 'flipped' : ''}`}>
-        {/* Front face (face-down) */}
-        <div className="flip-card-front flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-xl shadow-lg">
-          <span className="text-4xl select-none">?</span>
+        {/* Back face (face-down / decorative) */}
+        <div className="flip-card-front card-back-pattern flex items-center justify-center shadow-xl shadow-purple-900/30">
+          <div className="relative z-10 flex flex-col items-center gap-1">
+            <span className="text-4xl sm:text-5xl select-none drop-shadow-lg">🎉</span>
+            <span className="font-display text-white/80 text-xs font-bold tracking-widest uppercase mt-1">PartyQs</span>
+          </div>
         </div>
 
-        {/* Back face (question text) */}
-        <div className="flip-card-back flex items-center justify-center bg-white text-gray-800 rounded-xl shadow-lg border border-gray-200 p-4">
-          <p className="text-center text-sm sm:text-base font-medium leading-relaxed">
+        {/* Front face (question text) */}
+        <div className="flip-card-back card-front-face flex items-center justify-center shadow-xl shadow-purple-900/20 p-5">
+          <p className="relative z-10 text-center text-sm sm:text-base font-semibold leading-relaxed text-party-deep-purple">
             {text}
           </p>
         </div>

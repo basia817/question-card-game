@@ -59,36 +59,59 @@ export default function GamePage() {
     setFlippedCards(new Set())
   }, [])
 
+  const CATEGORY_META = {
+    couples: { emoji: '💑', label: 'Couples' },
+    friends: { emoji: '👫', label: 'Friends' },
+    family: { emoji: '👨\u200d👩\u200d👧', label: 'Family' },
+  }
+
+  const meta = CATEGORY_META[category] || { emoji: '🎴', label: category }
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-party relative">
+      {/* Decorative background orbs */}
+      <div className="floating-orb w-64 h-64 bg-pink-500 top-20 -left-16" />
+      <div className="floating-orb w-80 h-80 bg-blue-500 bottom-10 -right-16" style={{ animationDelay: '3s' }} />
+
       <Navbar />
-      <main className="max-w-5xl mx-auto px-4 py-6">
+
+      <main className="relative z-10 max-w-6xl mx-auto px-4 py-6 sm:py-8">
         {category && (
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4 capitalize">
-            {category}
-          </h2>
+          <div className="flex items-center justify-center gap-3 mb-6 sm:mb-8">
+            <span className="text-3xl sm:text-4xl">{meta.emoji}</span>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-white drop-shadow-md">
+              {meta.label}
+            </h2>
+          </div>
         )}
 
         {loading && (
-          <div className="flex justify-center items-center py-20">
-            <div className="animate-spin rounded-full h-10 w-10 border-4 border-indigo-500 border-t-transparent" />
+          <div className="flex flex-col items-center justify-center py-24 gap-4">
+            <div className="relative">
+              <div className="animate-spin rounded-full h-14 w-14 border-4 border-white/20 border-t-party-pink" />
+              <span className="absolute inset-0 flex items-center justify-center text-xl">🎉</span>
+            </div>
+            <p className="text-white/60 font-medium animate-pulse">Shuffling cards…</p>
           </div>
         )}
 
         {error && (
           <div
-            className="bg-red-50 border border-red-200 text-red-700 rounded-lg p-4 mb-4"
+            className="bg-red-500/20 backdrop-blur-sm border border-red-400/30 text-white rounded-2xl p-5 mb-6 max-w-lg mx-auto"
             role="alert"
           >
-            <p className="font-medium">Error loading questions</p>
-            <p className="text-sm">{error}</p>
+            <p className="font-display font-bold text-lg mb-1">⚠️ Oops!</p>
+            <p className="text-white/80 text-sm">{error}</p>
           </div>
         )}
 
         {!loading && !error && questions.length === 0 && (
-          <p className="text-center text-gray-500 py-10">
-            No questions found for this category.
-          </p>
+          <div className="text-center py-16">
+            <span className="text-6xl mb-4 block">😔</span>
+            <p className="text-white/60 text-lg font-medium">
+              No questions found for this category.
+            </p>
+          </div>
         )}
 
         {!loading && !error && questions.length > 0 && (
@@ -98,7 +121,7 @@ export default function GamePage() {
               flippedCards={flippedCards}
               onFlip={handleFlip}
             />
-            <div className="flex justify-center mt-6">
+            <div className="flex justify-center mt-8 sm:mt-10">
               <ResetButton onReset={handleReset} />
             </div>
           </>
