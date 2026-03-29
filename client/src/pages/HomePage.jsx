@@ -16,7 +16,7 @@ export default function HomePage() {
           <span className="text-5xl sm:text-6xl" role="img" aria-label="Party">🎉</span>
         </div>
         <h1 className="font-display text-5xl sm:text-7xl font-bold text-white mb-4 drop-shadow-lg">
-          Party<span className="text-shimmer">Qs</span>
+          Questions<span className="text-shimmer">Game</span>
         </h1>
         <p className="text-white/70 text-lg sm:text-xl font-medium max-w-md mx-auto">
           Pick a vibe and start the conversation
